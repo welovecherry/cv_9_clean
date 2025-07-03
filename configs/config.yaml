@@ -1,0 +1,162 @@
+# # 1. 기본값 설정: 가장 기본이 되는 모델 하나만 지정
+# defaults:
+#   - _self_
+#   - model: efficientnet_b0
+#   - override hydra/job_logging: disabled
+#   - override hydra/hydra_logging: disabled
+
+# # 2. 완디비 설정
+# wandb:
+#   project: "cv-team9"
+#   entity: "12hongcoffee-42"
+#   name: "${model.name}-lr_${train.learning_rate}"
+
+# # 3. 공통 학습 파라미터
+# train:
+#   seed: 42
+#   num_epochs: 5
+#   learning_rate: 1e-3 # 기본 학습률
+
+# # 4. 데이터 설정
+# data:
+#   path: "./data/train_split"
+#   image_size: 224
+#   batch_size: 32
+#   num_workers: 4
+
+# # 5. 모델 설정
+# model:
+#   # 기본 모델의 num_classes만 지정
+#   num_classes: 17
+
+# # 6. [핵심 수정] Hydra Sweeper 설정
+# # 이 부분이 자동화 실험의 '설계도' 역할을 함
+# hydra:
+#   sweeper:
+#     params:
+#       # [수정] 점(.)이 포함된 mobilenet 모델 이름에만 작은따옴표(') 추가
+#       model: [efficientnet_b0, efficientnet_b1, convnext_tiny, swin_tiny_patch4_window7_224]
+#       train.learning_rate: 1e-4, 3e-4, 1e-3
+
+# 버전 2 - 챔피언 모델 하나에 집중해보자
+# configs/config.yaml
+
+# defaults:
+#   - _self_
+#   - override hydra/job_logging: disabled
+#   - override hydra/hydra_logging: disabled
+
+# wandb:
+#   project: "cv-team9"
+#   entity: "12hongcoffee-42"
+#   name: "final-train-${model.name}-sz${data.image_size}"
+
+# train:
+#   seed: 42
+#   num_epochs: 20      # 에폭을 20으로 늘려서 충분히 학습
+#   learning_rate: 1e-3 # 챔피언 학습률
+
+# data:
+#   path: "./data/train_split"
+#   image_size: 384     # 이미지 크기를 384로 스케일업!
+#   batch_size: 16      # 이미지 크기가 커져서 배치 사이즈는 줄임
+#   num_workers: 4
+
+# model:
+#   name: "efficientnet_b1" # 챔피언 모델
+#   num_classes: 17
+
+
+
+# 버전 3 멀티런으로 384*384에 맞는 최적의 학습률 찾기
+# configs/config.yaml
+
+# defaults:
+#   - _self_
+#   - override hydra/job_logging: disabled
+#   - override hydra/hydra_logging: disabled
+
+# wandb:
+#   project: "cv-team9"
+#   entity: "12hongcoffee-42"
+#   name: "tune-lr-sz384-${model.name}-lr_${train.learning_rate}"
+
+# train:
+#   seed: 42
+#   num_epochs: 10
+#   learning_rate: 1e-4  # 가장 기본적인 단일 값으로 설정
+
+# data:
+#   path: "./data/train_split"
+#   image_size: 384
+#   batch_size: 16
+#   num_workers: 4
+
+# model:
+#   name: "efficientnet_b0"
+#   num_classes: 17
+
+# # [핵심 수정] Hydra Sweeper 설정 추가
+# hydra:
+#   sweeper:
+#     # params: 여기에 여러 값으로 실험하고 싶은 파라미터를 적음
+#     params:
+#       train.learning_rate: 1e-5, 3e-5, 1e-4, 3e-4
+
+
+
+
+# 버전 4. 최종 챔피언 모델: efficientnet_b0, 최적 학습률: 0.0001 (또는 1e-4), 최고 F1 점수: 0.9165
+# configs/config.yaml
+# defaults:
+#   - _self_
+#   - override hydra/job_logging: disabled
+#   - override hydra/hydra_logging: disabled
+
+# wandb:
+#   project: "cv-team9"
+#   entity: "12hongcoffee-42"
+#   name: "final-submission-train-${model.name}-sz${data.image_size}"
+
+# train:
+#   seed: 42
+#   num_epochs: 20
+#   learning_rate: 1e-4 # 최종 챔피언 학습률
+
+# data:
+#   path: "./data/train_split"
+#   image_size: 384     # 스케일업된 이미지 크기
+#   batch_size: 16
+#   num_workers: 4
+
+# model:
+#   name: "efficientnet_b0" # 최종 챔피언 모델
+#   num_classes: 17
+
+# 버전 5: 제출용 모델: efficientnet_b1(학습률 0.001)
+# configs/config.yaml
+
+defaults:
+  - _self_
+  - override hydra/job_logging: disabled
+  - override hydra/hydra_logging: disabled
+
+wandb:
+  project: "cv-team9"
+  entity: "12hongcoffee-42"
+  name: "final-submission-train-${model.name}-sz${data.image_size}"
+
+train:
+  seed: 42
+  num_epochs: 20              
+  learning_rate: 1e-3      
+
+data:
+  path: "./data/train_split"
+  image_size: 384              
+  batch_size: 16           
+  num_workers: 4
+
+model:
+  name: "efficientnet_b1"      
+  num_classes: 17

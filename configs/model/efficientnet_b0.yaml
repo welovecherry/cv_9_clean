@@ -1,0 +1,3 @@
+# efficientnet_b0 모델 설정
+name: "efficientnet_b0"
+pretrained: true
