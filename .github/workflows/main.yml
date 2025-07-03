@@ -1,0 +1,38 @@
+# .github/workflows/main.yml
+
+# 워크플로우의 이름
+name: Train Model on Remote Server
+
+# 언제 이 자동화를 실행할지 지정
+on:
+  push:
+    branches:
+      - **
+
+# 실행할 작업(job) 정의
+jobs:
+  train:
+    runs-on: ubuntu-latest # 이 워크플로우 자체는 GitHub의 가상 우분투 환경에서 실행됨
+    steps:
+      # 1. GitHub 저장소의 코드를 가상 환경으로 가져옴
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. SSH로 원격 서버에 접속해서 명령을 실행하는 액션 사용
+      - name: SSH into server and run training
+        uses: appleboy/ssh-action@master
+        with:
+          # 1단계에서 등록한 비밀 정보들을 사용
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          
+          # [핵심] 서버에서 실행할 명령어들
+          script: |
+            cd ~/cv_9_250630
+            git pull
+            source venv/bin/activate
+            echo "Starting training..."
+            python src/train.py
+            echo "Training finished!"
