@@ -1,0 +1,17 @@
+wandb:
+  project: cv-team9
+  entity: 12hongcoffee-42
+  name: SUBMISSION-RUN-${model.name}-sz${data.image_size}
+train:
+  seed: 42
+  num_epochs: 20
+  learning_rate: 0.001
+data:
+  path: ./data/raw
+  image_size: 384
+  batch_size: 16
+  num_workers: 4
+  augmentation_level: base
+model:
+  name: efficientnet_b1
+  num_classes: 17

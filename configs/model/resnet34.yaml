@@ -1,3 +1,0 @@
-# resnet34 모델 설정
-name: "resnet34"
-pretrained: true

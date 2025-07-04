@@ -1,0 +1,7 @@
+# 기본 설정
+path: "./data/raw"
+image_size: 224
+batch_size: 32
+num_workers: 4
+# 증강 레벨을 'base'로 지정
+augmentation_level: "base"

@@ -1,0 +1,5 @@
+path: "./data/raw"
+image_size: 512
+batch_size: 8  # 이미지 크기가 커졌으니 배치 사이즈는 줄여야 함
+num_workers: 4
+augmentation_level: "strong"

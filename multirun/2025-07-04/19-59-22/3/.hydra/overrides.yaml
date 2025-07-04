@@ -1,0 +1,3 @@
+- model=effnet_b1
+- data=size512
+- train.learning_rate=0.0003

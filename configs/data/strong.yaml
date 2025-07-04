@@ -1,0 +1,7 @@
+# 기본 설정을 그대로 사용하되, 증강 레벨만 변경
+# 강력한 증강
+
+defaults:
+  - base
+
+augmentation_level: "strong"

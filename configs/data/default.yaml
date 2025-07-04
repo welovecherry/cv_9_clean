@@ -1,4 +1,0 @@
-# 데이터 관련 경로 및 파라미터
-path: "data/raw"
-batch_size: 32
-num_workers: 4

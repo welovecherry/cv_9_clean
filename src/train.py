@@ -1,3 +1,5 @@
+# train.py
+
 import hydra
 from omegaconf import DictConfig
 import pytorch_lightning as pl
@@ -19,10 +21,12 @@ def main(cfg: DictConfig):
     wandb_logger = WandbLogger(
         project=cfg.wandb.project,
         entity=cfg.wandb.entity,
-        # name=cfg.wandb.name
-        name=f"{cfg.model.name}-{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}"
-
     )
+    
+    # [추가] 완디비 run의 이름을 우리가 원하는 형식으로 확실하게 설정
+    run_name = f"{cfg.model.name}-sz{cfg.data.image_size}-aug_{cfg.data.augmentation_level}-lr_{cfg.train.learning_rate}"
+    wandb_logger.experiment.name = run_name
+
 
     # 2. 콜백 설정: 모델 저장 및 조기 종료
     # ModelCheckpoint: val_f1 기준으로 가장 좋은 모델을 저장
@@ -37,21 +41,15 @@ def main(cfg: DictConfig):
     early_stopping_callback = EarlyStopping(
         monitor='val_loss', # 검증 데이터의 손실값 모니터링
         mode='min',
-        patience=3 # 3번의 에폭 동안 개선이 없으면 조기 종료
+        patience=5 # 3번의 에폭 동안 개선이 없으면 조기 종료
     )
 
-    # 3. 만들어 놓은 CustomDataModule와 CustomLightningModule 인스턴스 생성
-    # data_module = CustomDataModule(
-    #     path=cfg.data.path,
-    #     batch_size=cfg.data.batch_size,
-    #     num_workers=cfg.data.num_workers
-    # )
-    # src/train.py 의 main 함수 안
     data_module = CustomDataModule(
         data_path=cfg.data.path,         # 'path' -> 'data_path'로 수정
         image_size=cfg.data.image_size,  # 'image_size' 파라미터 추가
         batch_size=cfg.data.batch_size,
-        num_workers=cfg.data.num_workers
+        num_workers=cfg.data.num_workers,
+        augmentation_level=cfg.data.augmentation_level # [핵심] 이 줄을 추가!
     )
 
     model = CustomLightningModule(

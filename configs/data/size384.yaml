@@ -1,0 +1,5 @@
+path: "./data/raw"
+image_size: 384
+batch_size: 16
+num_workers: 4
+augmentation_level: "strong"
