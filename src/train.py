@@ -52,6 +52,17 @@ def main(cfg: DictConfig):
         augmentation_level=cfg.data.augmentation_level # [핵심] 이 줄을 추가!
     )
 
+    FINETUNE_CKPT_PATH = './models/convnext_base-epoch=06-val_f1=0.9585.ckpt'
+    
+    print(f"Loading model from {FINETUNE_CKPT_PATH} for fine-tuning...")
+    # 체크포인트로부터 모델을 불러와서 학습을 이어서 시작
+    model = CustomLightningModule.load_from_checkpoint(
+        FINETUNE_CKPT_PATH,
+        # config.yaml에 새로 정의된 아주 작은 학습률을 적용
+        learning_rate=cfg.train.learning_rate 
+    )
+
+
     model = CustomLightningModule(
         model_name=cfg.model.name,
         learning_rate=cfg.train.learning_rate

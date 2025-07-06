@@ -36,32 +36,61 @@
 # configs/config.yaml
 
 # 기본값 설정
+# defaults:
+#   - _self_
+#   - override hydra/job_logging: disabled
+#   - override hydra/hydra_logging: disabled
+
+# # 완디비 설정
+# wandb:
+#   project: "cv-team9"
+#   entity: "12hongcoffee-42"
+#   name: "CHAMPION-RUN-${model.name}-sz${data.image_size}"
+
+# # 공통 학습 파라미터
+# train:
+#   seed: 42
+#   num_epochs: 25      # 챔피언 모델이니 25 에폭으로 충분히 학습
+#   learning_rate: 3e-4 # 챔피언 학습률
+
+# # 데이터 설정
+# data:
+#   path: "./data/raw"
+#   image_size: 512     # 챔피언 이미지 크기
+#   batch_size: 8       # 512 사이즈에 맞는 배치 크기
+#   num_workers: 4
+#   augmentation_level: "strong" # 챔피언 증강 레벨
+
+# # 모델 설정
+# model:
+#   name: "tf_efficientnetv2_s" # 최종 챔피언 모델
+#   num_classes: 17
+
+
+# configs/config.yaml (Final Fine-tuning용)
+
 defaults:
   - _self_
   - override hydra/job_logging: disabled
   - override hydra/hydra_logging: disabled
 
-# 완디비 설정
 wandb:
   project: "cv-team9"
   entity: "12hongcoffee-42"
-  name: "CHAMPION-RUN-${model.name}-sz${data.image_size}"
+  name: "PSEUDO-LABEL-FINETUNE-${model.name}"
 
-# 공통 학습 파라미터
 train:
   seed: 42
-  num_epochs: 25      # 챔피언 모델이니 25 에폭으로 충분히 학습
-  learning_rate: 3e-4 # 챔피언 학습률
+  num_epochs: 10 # 짧은 에폭으로 미세 조정
+  learning_rate: 1e-5 # 아주 작은 학습률로 섬세하게 학습
 
-# 데이터 설정
 data:
-  path: "./data/raw"
-  image_size: 512     # 챔피언 이미지 크기
-  batch_size: 8       # 512 사이즈에 맞는 배치 크기
+  path: "./data/final_training_data/" # [핵심] 족집게 과외 데이터셋 경로
+  image_size: 512
+  batch_size: 8
   num_workers: 4
-  augmentation_level: "strong" # 챔피언 증강 레벨
+  augmentation_level: "strong" # 강한 증강으로 실전 대비
 
-# 모델 설정
 model:
-  name: "tf_efficientnetv2_s" # 최종 챔피언 모델
+  name: "convnext_base" # 우리의 챔피언 모델
   num_classes: 17

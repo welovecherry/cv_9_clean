@@ -49,13 +49,17 @@ def predict_with_tta(model, image, transforms, device):
 
 if __name__ == '__main__':
     
-    # A팀 모델 정보
-    CKPT_PATH_A = './models/tf_efficientnetv2_s-epoch=07-val_f1=0.9383.ckpt'
+   
+    # A팀 (ConvNeXt 챔피언)
+    CKPT_PATH_A = './models/convnext_base-epoch=06-val_f1=0.9585.ckpt'
     IMG_SIZE_A = 512
+    WEIGHT_A = 0.51 # 점수가 더 높으니 가중치를 51%로 약간 더 줌
 
-    # B팀 모델 정보
-    CKPT_PATH_B = './models/efficientnet_b1-epoch=09-val_f1=0.9224.ckpt'
+    # B팀 (EfficientNetV2 챔피언)
+    CKPT_PATH_B = './models/tf_efficientnetv2_s-epoch=21-val_f1=0.9565.ckpt'
     IMG_SIZE_B = 512
+    WEIGHT_B = 0.49 # 파트너에게 49% 가중치
+ 
 
     # --- 공통 설정 ---
     TEST_DIR = './data/raw/test/'

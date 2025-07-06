@@ -202,20 +202,110 @@
 # src/data.py
 # src/data.py
 
+# import torch
+# import pytorch_lightning as pl
+# import pandas as pd
+# import os
+# import cv2
+# import numpy as np
+# from torch.utils.data import Dataset, DataLoader
+# from sklearn.model_selection import StratifiedKFold
+# import albumentations as A
+# from albumentations.pytorch import ToTensorV2
+# from tqdm import tqdm
+
+# # ImageDataset은 이제 항상 유효한 경로만 받으므로, try-except가 필요 없음
+# class ImageDataset(Dataset):
+#     def __init__(self, df, data_root, transform=None):
+#         self.df = df
+#         self.data_root = data_root
+#         self.transform = transform
+#         self.image_paths = self.df['ID'].values
+#         self.labels = self.df['target'].values
+
+#     def __len__(self):
+#         return len(self.df)
+
+#     def __getitem__(self, idx):
+#         image_path = os.path.join(self.data_root, self.image_paths[idx])
+#         label = self.labels[idx]
+#         image = cv2.imread(image_path)
+#         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+#         if self.transform:
+#             image = self.transform(image=image)['image']
+#         return image, label
+
+# class CustomDataModule(pl.LightningDataModule):
+#     # __init__ 함수는 이전과 동일
+#     def __init__(self, data_path: str, image_size: int = 224, batch_size: int = 32, num_workers: int = 4, augmentation_level: str = "base"):
+#         super().__init__()
+#         self.data_path = data_path
+#         self.image_size = image_size
+#         self.batch_size = batch_size
+#         self.num_workers = num_workers
+#         self.augmentation_level = augmentation_level
+
+#         # ... (transform 정의 부분은 이전과 동일) ...
+#         base_transform = [A.Resize(self.image_size, self.image_size), A.Normalize(), ToTensorV2()]
+#         strong_transform = [A.Resize(self.image_size, self.image_size), A.HorizontalFlip(p=0.5), A.ShiftScaleRotate(p=0.5), A.CoarseDropout(), A.Normalize(), ToTensorV2()]
+        
+#         if self.augmentation_level == "strong":
+#             self.train_transform = A.Compose(strong_transform)
+#         else:
+#             self.train_transform = A.Compose(base_transform)
+
+#         self.val_transform = A.Compose([A.Resize(self.image_size, self.image_size), A.Normalize(), ToTensorV2()])
+
+
+#     def setup(self, stage=None):
+#         # [핵심 수정] 데이터 로드 전, 실제 파일이 있는 목록만 필터링
+#         image_data_root = os.path.join(self.data_path, 'train')
+#         original_df = pd.read_csv(os.path.join(self.data_path, 'train.csv'))
+        
+#         print("Checking for valid image files...")
+#         # apply 함수를 사용해 각 파일의 존재 여부를 확인
+#         exists = [os.path.exists(os.path.join(image_data_root, fname)) for fname in tqdm(original_df['ID'])]
+        
+#         # 실제 존재하는 파일 정보만 담은 새로운 데이터프레임을 생성
+#         clean_df = original_df[exists].reset_index(drop=True)
+        
+#         print(f"Found {len(clean_df)} valid images out of {len(original_df)}.")
+
+#         # 이제 깨끗한 데이터프레임으로 train/val 분리
+#         skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+#         train_idx, val_idx = next(iter(skf.split(clean_df, clean_df['target'])))
+        
+#         train_df = clean_df.iloc[train_idx]
+#         val_df = clean_df.iloc[val_idx]
+        
+#         self.train_dataset = ImageDataset(df=train_df, data_root=image_data_root, transform=self.train_transform)
+#         self.val_dataset = ImageDataset(df=val_df, data_root=image_data_root, transform=self.val_transform)
+
+#     # 이제 collate_fn이 필요 없으므로 원래대로 복구
+#     def train_dataloader(self):
+#         return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers)
+
+#     def val_dataloader(self):
+#         return DataLoader(self.val_dataset, batch_size=self.batch_size, num_workers=self.num_workers)
+
+
+# src/data.py
+
 import torch
 import pytorch_lightning as pl
 import pandas as pd
 import os
 import cv2
 import numpy as np
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, random_split
+from torchvision import datasets # ImageFolder를 위해 필요
 from sklearn.model_selection import StratifiedKFold
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 from tqdm import tqdm
 
-# ImageDataset은 이제 항상 유효한 경로만 받으므로, try-except가 필요 없음
-class ImageDataset(Dataset):
+# --- CSV 파일을 읽기 위한 Dataset ---
+class CsvDataset(Dataset):
     def __init__(self, df, data_root, transform=None):
         self.df = df
         self.data_root = data_root
@@ -235,9 +325,25 @@ class ImageDataset(Dataset):
             image = self.transform(image=image)['image']
         return image, label
 
+# --- ImageFolder 데이터셋에 transform을 적용하기 위한 래퍼 ---
+class TransformedDataset(Dataset):
+    def __init__(self, subset, transform=None):
+        self.subset = subset
+        self.transform = transform
+
+    def __len__(self):
+        return len(self.subset)
+
+    def __getitem__(self, idx):
+        x, y = self.subset[idx]
+        x = np.array(x)
+        if self.transform:
+            x = self.transform(image=x)['image']
+        return x, y
+
+# --- 똑똑한 데이터 모듈 ---
 class CustomDataModule(pl.LightningDataModule):
-    # __init__ 함수는 이전과 동일
-    def __init__(self, data_path: str, image_size: int = 224, batch_size: int = 32, num_workers: int = 4, augmentation_level: str = "base"):
+    def __init__(self, data_path: str, image_size: int, batch_size: int, num_workers: int, augmentation_level: str):
         super().__init__()
         self.data_path = data_path
         self.image_size = image_size
@@ -245,43 +351,57 @@ class CustomDataModule(pl.LightningDataModule):
         self.num_workers = num_workers
         self.augmentation_level = augmentation_level
 
-        # ... (transform 정의 부분은 이전과 동일) ...
+        # --- 증강 파이프라인 정의 ---
         base_transform = [A.Resize(self.image_size, self.image_size), A.Normalize(), ToTensorV2()]
-        strong_transform = [A.Resize(self.image_size, self.image_size), A.HorizontalFlip(p=0.5), A.ShiftScaleRotate(p=0.5), A.CoarseDropout(), A.Normalize(), ToTensorV2()]
-        
+        strong_transform = [
+            A.Resize(self.image_size, self.image_size),
+            A.HorizontalFlip(p=0.5),
+            A.ShiftScaleRotate(p=0.5),
+            A.CoarseDropout(p=0.3),
+            A.Normalize(),
+            ToTensorV2()
+        ]
+
         if self.augmentation_level == "strong":
             self.train_transform = A.Compose(strong_transform)
         else:
             self.train_transform = A.Compose(base_transform)
-
+        
         self.val_transform = A.Compose([A.Resize(self.image_size, self.image_size), A.Normalize(), ToTensorV2()])
 
-
     def setup(self, stage=None):
-        # [핵심 수정] 데이터 로드 전, 실제 파일이 있는 목록만 필터링
-        image_data_root = os.path.join(self.data_path, 'train')
-        original_df = pd.read_csv(os.path.join(self.data_path, 'train.csv'))
+        # [핵심] 데이터 경로에 'train.csv'가 있는지 확인
+        train_csv_path = os.path.join(self.data_path, 'train.csv')
         
-        print("Checking for valid image files...")
-        # apply 함수를 사용해 각 파일의 존재 여부를 확인
-        exists = [os.path.exists(os.path.join(image_data_root, fname)) for fname in tqdm(original_df['ID'])]
-        
-        # 실제 존재하는 파일 정보만 담은 새로운 데이터프레임을 생성
-        clean_df = original_df[exists].reset_index(drop=True)
-        
-        print(f"Found {len(clean_df)} valid images out of {len(original_df)}.")
+        if os.path.exists(train_csv_path):
+            # --- 일반 학습 모드 (CSV 사용) ---
+            print(f"Found train.csv in {self.data_path}. Loading data using CSV.")
+            original_df = pd.read_csv(train_csv_path)
+            image_data_root = os.path.join(self.data_path, 'train')
+            
+            exists = [os.path.exists(os.path.join(image_data_root, fname)) for fname in tqdm(original_df['ID'], desc="Validating files")]
+            clean_df = original_df[exists].reset_index(drop=True)
+            
+            skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+            train_idx, val_idx = next(iter(skf.split(clean_df, clean_df['target'])))
+            
+            train_df = clean_df.iloc[train_idx]
+            val_df = clean_df.iloc[val_idx]
+            
+            self.train_dataset = CsvDataset(df=train_df, data_root=image_data_root, transform=self.train_transform)
+            self.val_dataset = CsvDataset(df=val_df, data_root=image_data_root, transform=self.val_transform)
+        else:
+            # --- 파인튜닝 모드 (ImageFolder 사용) ---
+            print(f"No train.csv found. Loading data using ImageFolder from {self.data_path}.")
+            full_dataset = datasets.ImageFolder(self.data_path)
+            
+            train_size = int(0.9 * len(full_dataset))
+            val_size = len(full_dataset) - train_size
+            train_subset, val_subset = random_split(full_dataset, [train_size, val_size])
 
-        # 이제 깨끗한 데이터프레임으로 train/val 분리
-        skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-        train_idx, val_idx = next(iter(skf.split(clean_df, clean_df['target'])))
-        
-        train_df = clean_df.iloc[train_idx]
-        val_df = clean_df.iloc[val_idx]
-        
-        self.train_dataset = ImageDataset(df=train_df, data_root=image_data_root, transform=self.train_transform)
-        self.val_dataset = ImageDataset(df=val_df, data_root=image_data_root, transform=self.val_transform)
+            self.train_dataset = TransformedDataset(train_subset, self.train_transform)
+            self.val_dataset = TransformedDataset(val_subset, self.val_transform)
 
-    # 이제 collate_fn이 필요 없으므로 원래대로 복구
     def train_dataloader(self):
         return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers)
 
