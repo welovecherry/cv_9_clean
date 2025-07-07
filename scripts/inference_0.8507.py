@@ -89,7 +89,9 @@ if __name__ == '__main__':
         preds_c = predict_with_8_way_tta(models[2], image, IMG_SIZE_C, DEVICE)
         
         # 세 모델의 예측 확률을 단순 평균
-        ensemble_preds = (preds_a + preds_b + preds_c) / 3
+        # ensemble_preds = (preds_a + preds_b + preds_c) / 3
+        # [수정] val_f1 점수 기반으로 가중치를 부여하여 앙상블
+        ensemble_preds = (preds_a * 0.5) + (preds_b * 0.3) + (preds_c * 0.2)
         final_prediction = torch.argmax(ensemble_preds, dim=0).item()
         final_predictions.append(final_prediction)
 

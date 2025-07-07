@@ -1,73 +1,30 @@
-# # 1. 기본값 설정
-# defaults:
-#   - _self_
-#   - model: effnet_b2
-#   - data: size384
-#   - override hydra/job_logging: disabled
-#   - override hydra/hydra_logging: disabled
-
-# # 2. 완디비 설정
-# wandb:
-#   project: "cv-team9"
-#   entity: "12hongcoffee-42"
-#   name: "${model.name}-sz${data.image_size}-lr_${train.learning_rate}"
-
-# # 3. 공통 학습 파라미터
-# train:
-#   seed: 42
-#   num_epochs: 10 # 시간 내에 끝나도록 에폭 조절
-#   learning_rate: 1e-3 # 기본값
-
-# # 4. 모델 설정
-# model:
-#   num_classes: 17
-
-# # 5. Hydra Sweeper 설정 (자동화 실험의 핵심)
-# hydra:
-#   sweeper:
-#     # params: 실험할 모든 조합을 지시
-#     params:
-#       model: effnet_b1, effnet_b2, tf_efficientnetv2_s
-#       data: size384, size512
-#       train.learning_rate: 1e-4, 3e-4
-
-
-# 버전2 
-# configs/config.yaml
-
-# 기본값 설정
 # defaults:
 #   - _self_
 #   - override hydra/job_logging: disabled
 #   - override hydra/hydra_logging: disabled
 
-# # 완디비 설정
 # wandb:
 #   project: "cv-team9"
 #   entity: "12hongcoffee-42"
-#   name: "CHAMPION-RUN-${model.name}-sz${data.image_size}"
+#   name: "HELL-TRAIN-${model.name}-sz${data.image_size}"
 
-# # 공통 학습 파라미터
 # train:
 #   seed: 42
-#   num_epochs: 25      # 챔피언 모델이니 25 에폭으로 충분히 학습
-#   learning_rate: 3e-4 # 챔피언 학습률
+#   num_epochs: 20 # '지옥 훈련'은 더 오래 해야 함
+#   learning_rate: 3e-4 # 안정적인 시작
 
-# # 데이터 설정
 # data:
 #   path: "./data/raw"
-#   image_size: 512     # 챔피언 이미지 크기
-#   batch_size: 8       # 512 사이즈에 맞는 배치 크기
+#   image_size: 384 # 384 사이즈로 시작
+#   batch_size: 16
 #   num_workers: 4
-#   augmentation_level: "strong" # 챔피언 증강 레벨
+#   augmentation_level: "ultimate" # [핵심] '궁극의 증강' 사용
 
-# # 모델 설정
 # model:
-#   name: "tf_efficientnetv2_s" # 최종 챔피언 모델
+#   name: "convnext_base" # '지옥 훈련'을 받을 우리의 에이스
 #   num_classes: 17
 
-
-# configs/config.yaml (Final Fine-tuning용)
+# configs/config.yaml (Ultimate Training용)
 
 defaults:
   - _self_
@@ -77,20 +34,20 @@ defaults:
 wandb:
   project: "cv-team9"
   entity: "12hongcoffee-42"
-  name: "PSEUDO-LABEL-FINETUNE-${model.name}"
+  name: "ULTIMATE-TRAIN-${model.name}-sz${data.image_size}"
 
 train:
   seed: 42
-  num_epochs: 10 # 짧은 에폭으로 미세 조정
-  learning_rate: 1e-5 # 아주 작은 학습률로 섬세하게 학습
+  num_epochs: 30 # 강력한 증강 데이터는 더 오래 학습해야 함
+  learning_rate: 3e-4 # 안정적인 시작
 
 data:
-  path: "./data/final_training_data/" # [핵심] 족집게 과외 데이터셋 경로
-  image_size: 512
-  batch_size: 8
+  path: "./data/augmented_v1_0707/"
+  image_size: 384
+  batch_size: 16
   num_workers: 4
-  augmentation_level: "strong" # 강한 증강으로 실전 대비
+  augmentation_level: "base" # 이미 증강된 데이터이므로, 학습 시에는 기본 변환만 적용
 
 model:
-  name: "convnext_base" # 우리의 챔피언 모델
+  name: "convnext_base" # '지옥 훈련'을 받을 우리의 에이스
   num_classes: 17
