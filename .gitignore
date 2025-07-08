@@ -28,3 +28,4 @@ models/
 !.env.template
 
 /outputs/
+augraphy_cache/
