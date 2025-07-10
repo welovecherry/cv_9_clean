@@ -1,72 +1,72 @@
-# defaults:
-#   - _self_
-#   - override hydra/job_logging: disabled
-#   - override hydra/hydra_logging: disabled
-
-# wandb:
-#   project: "cv-team9"
-#   entity: "12hongcoffee-42"
-#   name: "HELL-TRAIN-${model.name}-sz${data.image_size}"
-
-# train:
-#   seed: 42
-#   num_epochs: 20 # '지옥 훈련'은 더 오래 해야 함
-#   learning_rate: 3e-4 # 안정적인 시작
-
-# data:
-#   path: "./data/raw"
-#   image_size: 384 # 384 사이즈로 시작
-#   batch_size: 16
-#   num_workers: 4
-#   augmentation_level: "ultimate" # [핵심] '궁극의 증강' 사용
-
-# model:
-#   name: "convnext_base" # '지옥 훈련'을 받을 우리의 에이스
-#   num_classes: 17
-
-# configs/config.yaml (Ultimate Training용)
-
-# defaults:
-#   - _self_
-#   - override hydra/job_logging: disabled
-#   - override hydra/hydra_logging: disabled
+# configs/config.yaml
 
 wandb:
   project: "cv-team9"
   entity: "12hongcoffee-42"
   name: "0708-${model.name}-sz${data.image_size}"
 
-# train:
-#   seed: 42
-#   num_epochs: 50 # 강력한 증강 데이터는 더 오래 학습해야 함
-#   learning_rate: 3e-4 # 안정적인 시작
 
-# data:
-#   path: "./data/augmented_v1_0707/"
-#   image_size: 384
-#   batch_size: 16
-#   num_workers: 4
-#   augmentation_level: "base" # 이미 증강된 데이터이므로, 학습 시에는 기본 변환만 적용
-
-# config.yaml에 fold 항목 추가
-
-# train:
-#   seed: 42
-#   learning_rate: 2e-5
-#   num_epochs: 30
+wandb:
+  name: resume-0708-convnext_base
 train:
+  ckpt_path: "./models/0708-convnext_base-sz384-epoch=09-val_f1=0.9928.ckpt"
   seed: 42
   learning_rate: 2e-5
-  num_epochs: 30
-  ckpt_path: null  # 이어서 학습하려면 경로 입력: ./models/....ckpt
-
-data:
-  path: ./data/final_training_data
-  image_size: 384
-  batch_size: 32
-  num_workers: 4
-  augmentation_level: 1
+  max_epochs: 25
+  use_mixup: false
+  label_smoothing: 0.1
+  num_epochs: 25
 
 model:
-  name: "convnext_base" # '지옥 훈련'을 받을 우리의 에이스
-  num_classes: 17
+  name: convnext_base
+
+train:
+  seed: 42
+  max_epochs: 25
+  ckpt_path: ./models/0708-convnext_base-sz384-epoch=09-val_f1=0.9928.ckpt
+
+
+# 실패한 실헙
+# 하이드라와 완디비 SWEEP이 동시에 config.yaml을 제어하려고 해서 충돌남.. 시간 부족으로 해결 못함
+
+# defaults:
+#   - _self_
+
+# # Hydra 관련 설정
+# hydra:
+#   run:
+#     dir: ./outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
+#   job:
+#     config:
+#       override_dirname:
+#         exclude_keys: []
+
+# # W&B 설정
+# wandb:
+#   project: cv_9_clean_final-src
+#   entity: 12hongcoffee-42
+#   name: sweep_run
+
+# # 데이터 설정
+# data:
+#   path: ./data/raw
+#   image_size: 384
+#   batch_size: 32
+#   num_workers: 4
+#   augmentation_level: 1
+
+# # 모델 설정
+# model:
+#   name: convnext_base
+#   num_classes: 17
+
+# # 학습 설정
+# train:
+#   seed: 42
+#   learning_rate: 1e-4
+#   scheduler: cosine  # 선택: step, cosine, plateau
+#   max_epochs: 20
+#   cutmix_alpha: 0.0
+#   mixup_alpha: 0.0
+#   label_smoothing: 0.0
+#   ckpt_path: null  # 이어서 학습할 경우에만 경로 지정

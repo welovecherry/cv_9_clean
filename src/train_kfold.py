@@ -10,7 +10,8 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 import wandb
 
 
-@hydra.main(config_path="../configs", config_name="config.yaml", version_base=None)
+# @hydra.main(config_path="../configs", config_name="config.yaml", version_base=None)
+@hydra.main(config_path="../configs", config_name="kfold_config.yaml", version_base=None)
 def main(cfg: DictConfig):
     # --- K-Fold 교차 검증을 위한 메인 루프 ---
     for fold_num in range(cfg.train.n_splits):

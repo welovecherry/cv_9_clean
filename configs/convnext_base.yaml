@@ -1,0 +1,26 @@
+# configs/convnext_base.yaml
+# 이 파일이 기본 설정 파일이다.
+# convnext_sweep.yaml 파일에서 sweep을 실행할 때 이 파일을 참조함
+# cconvnext_sweep.yaml 파일: 자동 실험 하면서 값을 바꿔가며 학습할 때 사용
+
+wandb:
+  project: "cv-team9"
+  entity: "12hongcoffee-42"
+  name: "0711-convnext_base-sz384"
+
+data:
+  path: ./data
+  train_csv: train_folds_augmented.csv
+  image_size: 384
+  batch_size: 32
+  num_workers: 4
+
+model:
+  name: convnext_base
+  num_classes: 17
+
+train:
+  n_splits: 5
+  seed: 42
+  learning_rate: 1e-4
+  num_epochs: 25

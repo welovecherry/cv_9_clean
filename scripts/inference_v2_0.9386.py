@@ -1,4 +1,5 @@
 # scripts/inference_v2.py
+# 리더보드 점수 0.9386
 
 import torch
 import pandas as pd
@@ -58,6 +59,7 @@ def predict_with_enhanced_tta(model, image, img_size, device):
 if __name__ == '__main__':
     # --- 설정 ---
     CKPT_PATH = './models/0708-convnext_base-sz384-epoch=19-val_f1=0.9950.ckpt'
+    # CKPT_PATH = './models/0708-convnext_base-sz384-epoch=09-val_f1=0.9928.ckpt'
     IMG_SIZE = 384
     DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     TEST_DIR = './data/raw/test/'
@@ -91,3 +93,4 @@ if __name__ == '__main__':
     submission_df.to_csv(output_filename, index=False)
 
     print(f"\n[완료] TTA v2 추론 결과 저장 → {output_filename}")
+

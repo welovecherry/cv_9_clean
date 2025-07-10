@@ -10,7 +10,6 @@ defaults:
 wandb:
   project: "cv-team9"
   entity: "12hongcoffee-42"
-  # 이름에 fold 번호가 들어가도록 나중에 train.py에서 설정할 예정
   name: "K-FOLD-TRAIN-${model.name}"
 
 # K-Fold를 위한 학습 설정
@@ -20,9 +19,9 @@ train:
   learning_rate: 1e-4 # K-Fold는 안정적인 학습률로 시작
   n_splits: 5 # 5-Fold 교차 검증 실행
 
-# K-Fold를 위한 데이터 설정
+
 data:
-  path: "./data/raw" # 원본 데이터를 사용
+  path: "./data/final_training_data"
   image_size: 384
   batch_size: 16
   num_workers: 4
