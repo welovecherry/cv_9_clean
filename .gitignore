@@ -10,7 +10,7 @@ venv/
 .idea/
 .DS_Store
 
-# Data & Models (DVC로 관리할 대상. DVC 쓸지말지 고민 중...)
+# Data & Model
 models/ 
 
 # 대회 데이터셋 유출하지 않도록!
@@ -21,10 +21,11 @@ models/
 # 쥬피터 노트북 체크포인트 무시
 .ipynb_checkpoints
 
-*.ipynb
+# *.ipynb
 
 /wandb/
 
 !.env.template
 
 /outputs/
+augraphy_cache/

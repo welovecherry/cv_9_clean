@@ -1,0 +1,29 @@
+# configs/convnext_sweep.yaml
+
+program: src/train.py
+method: random
+command:
+  - ${env}
+  - python
+  - src/train.py
+  - --config-path=../configs
+  - --config-name=config.yaml
+parameters:
+  data.augmentation_level:
+    values: [1, 2]
+  data.batch_size:
+    values: [16, 32]
+  train.cutmix_alpha:
+    values: [0.0, 0.1]
+  train.label_smoothing: # 모델이 과하게 확신하지 않도록 함. 오버피팅 방지
+    values: [0.0, 0.1, 0.2]
+  train.learning_rate:
+    values: [1e-3, 5e-4, 1e-4, 5e-5]
+  train.mixup_alpha: # 두 이미지를 섞고, 정답도 섞는 것. 경계가 애매한 경우에도 잘 예측하도록 함. 오버피팅 방지
+    values: [0.0, 0.1] # 값이 클수록 더 강하게 섞음
+  train.scheduler: # 학습률을 시간에 따라 조정하는 방법
+    values: ['cosine', 'step', 'plateau']
+
+# 코사인: 처음에는 크게 -> 천천히 작게 -> 아주 작게 학습률 조정
+# 스텝: 일정한 에폭마다 학습률을 줄임
+# 플래토: 검증 성능이 안좋아지면 학습률 줄임

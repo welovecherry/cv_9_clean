@@ -1,0 +1,17 @@
+wandb:
+  project: cv-team9
+  entity: 12hongcoffee-42
+  name: onecyclelr-test-${model.name}-lr_${train.learning_rate}
+train:
+  seed: 42
+  num_epochs: 25
+  learning_rate: 0.0001
+data:
+  path: ./data/raw
+  image_size: 512
+  batch_size: 8
+  num_workers: 4
+  augmentation_level: strong
+model:
+  name: tf_efficientnetv2_s
+  num_classes: 17

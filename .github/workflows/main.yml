@@ -1,6 +1,6 @@
 # .github/workflows/main.yml
 
-# 워크플로우의 이름
+# 워크플로우 이름
 name: Train Model on Remote Server
 
 # 언제 이 자동화를 실행할지 지정
