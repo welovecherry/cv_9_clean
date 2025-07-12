@@ -21,7 +21,7 @@ models/
 # 쥬피터 노트북 체크포인트 무시
 .ipynb_checkpoints
 
-*.ipynb
+# *.ipynb
 
 /wandb/
 
