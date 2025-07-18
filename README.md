@@ -6,7 +6,9 @@ It highlights my experience in building a reproducible experimentation pipeline 
 
 ---
 
-**English | [한국어](#-체계적인-실험을-통한-이미지-분류-경진대회)**  
+[English](#-systematic-ml-experimentation-for-image-classification---f1_score-09462) | [한국어](#-체계적인-실험을-통한-이미지-분류-경진대회-f1_score-09462)
+
+---
 
 ## 🎯 Project Overview  
 
@@ -14,10 +16,11 @@ This project details my end-to-end process for a Document Image Classification C
 The primary goal was to systematically improve model performance by moving beyond baseline models.  
 I designed and executed a highly organized experimentation workflow, conducting over **167 tracked experiments** to find the optimal data handling, modeling, and inference strategies.  
 This rigorous, data-driven approach culminated in a sophisticated ensemble model that achieved my personal best score on the final leaderboard.  
- 
-> Tracking over 167 experiments in W&B to find the winning strategy.  
-<img width="1286" height="526" alt="스크린샷 2025-07-18 오후 5 43 30" src="https://github.com/user-attachments/assets/a3472d87-fd36-4e75-b4f2-47d00bf2759d" />
-<img width="1062" height="428" alt="스크린샷 2025-07-18 오후 5 45 17" src="https://github.com/user-attachments/assets/04fe3959-c753-4754-aa64-837f5fc97846" />
+
+> Tracking over 167 experiments in W&B to find the winning strategy.
+
+<img src="https://github.com/user-attachments/assets/a3472d87-fd36-4e75-b4f2-47d00bf2759d" width="1286" height="526">
+<img src="https://github.com/user-attachments/assets/04fe3959-c753-4754-aa64-837f5fc97846" width="1062" height="428">
 
 ---
 
@@ -42,8 +45,9 @@ I established a systematic workflow to ensure all experiments were logical and r
 │ (Error Analysis) │   │ Preprocessing  │   │ (Hydra + W&B Sweep)│   │ (Ensemble/TTA)  │
 └──────────────────┘   └────────────────┘   └────────────────────┘   └─────────────────┘
 ```
-<img width="852" height="536" alt="스크린샷 2025-07-18 오후 5 54 12" src="https://github.com/user-attachments/assets/8ca5208a-3e9c-4ecc-965c-97255bfe4d43" />
-![Uploading 스크린샷 2025-07-18 오후 5.55.02.png…]()
+
+<img src="https://github.com/user-attachments/assets/8ca5208a-3e9c-4ecc-965c-97255bfe4d43" width="852" height="536">
+<img src="https://github.com/user-attachments/assets/3af24b9d-2742-4dfa-a539-602ffa83586a" width="810" height="823">
 
 ---
 
@@ -60,9 +64,6 @@ I created a detailed **"Error Notebook"** by manually reviewing misclassified im
 ---
 
 ### 2️⃣ Hypothesis-Driven Modeling (Successes & Failures)  
-
-I treated each experiment as a hypothesis test, learning from both successes and failures.  
-This iterative process was the engine of my performance improvement.  
 
 | My Hypothesis | Result | What I Learned |
 |---|---|---|
@@ -82,16 +83,16 @@ This iterative process was the engine of my performance improvement.
 
 **The Result:** This approach gave me confidence to submit the 1814 model, achieving my personal best.  
 
-<img width="648" height="567" alt="스크린샷 2025-07-11 오후 3 40 19" src="https://github.com/user-attachments/assets/f948cd1f-be7c-4265-a025-2436f9d12a0a" />
-> Making the final decision by comparing top models against curated "hard cases".  
+<img src="https://github.com/user-attachments/assets/f948cd1f-be7c-4265-a025-2436f9d12a0a" width="648" height="567">
 
 ---
 
 ## 📊 Measurable Results  
-  
+
 - **Final Leaderboard Score:** F1-score of **0.9462**  
 - **Systematic Experimentation:** Tracked **167+ experiments** in W&B  
-<img width="957" height="820" alt="스크린샷 2025-07-18 오후 5 49 16" src="https://github.com/user-attachments/assets/c663adc0-facd-4f65-9b8d-177187accd12" />
+
+<img src="https://github.com/user-attachments/assets/c663adc0-facd-4f65-9b8d-177187accd12" width="757" height="820">
 
 ---
 
@@ -115,18 +116,18 @@ python scripts/inference/inference_two_ace_ensemble.py
 
 💡 **프로젝트 핵심**  
 이 저장소는 머신러닝 경진대회를 진행한 전체 과정을 기록했습니다.  
-WandB, PyTorch Lightning, Hydra를 활용하여 재현 가능한 실험 파이프라인을 구축하고, 데이터 기반 분석을 통해 모델 성능을 체계적으로 개선한 경험 했습니다.  
+WandB, PyTorch Lightning, Hydra를 활용하여 재현 가능한 실험 파이프라인을 구축하고, 데이터 기반 분석을 통해 모델 성능을 체계적으로 개선한 경험을 담았습니다.  
 
 ---
 
 ## 🎯 프로젝트 개요  
 
 17개 클래스를 분류하는 문서 이미지 분류 경진대회의 전 과정을 담았습니다.  
-단순히 모델을 학습시키는 것을 넘어, 체계적인 실험 워크플로우를 설계하고 **167회 이상의 실험**을 수행했습니다.  
+체계적인 실험 워크플로우를 설계하고 **167회 이상의 실험**을 수행했습니다.  
 오답 노트를 활용한 심층 분석으로 약점을 찾아내고, 앙상블 및 추론 전략을 적용해 개인 최고 기록을 달성했습니다.  
 
-<img width="1286" height="526" alt="스크린샷 2025-07-18 오후 5 43 30" src="https://github.com/user-attachments/assets/a3472d87-fd36-4e75-b4f2-47d00bf2759d" />
-<img width="1062" height="428" alt="스크린샷 2025-07-18 오후 5 45 17" src="https://github.com/user-attachments/assets/04fe3959-c753-4754-aa64-837f5fc97846" />
+<img src="https://github.com/user-attachments/assets/a3472d87-fd36-4e75-b4f2-47d00bf2759d" width="1286" height="526">
+<img src="https://github.com/user-attachments/assets/04fe3959-c753-4754-aa64-837f5fc97846" width="1062" height="428">
 
 ---
 
@@ -149,8 +150,9 @@ WandB, PyTorch Lightning, Hydra를 활용하여 재현 가능한 실험 파이�
 │ (EDA, 오답노트)│   │ (Albumentations) │   │ (Hydra + W&B)    │   │ (앙상블, TTA)   │
 └──────────────┘   └────────────────┘   └───────────────────┘   └─────────────────┘
 ```
-<img width="852" height="536" alt="스크린샷 2025-07-18 오후 5 54 12" src="https://github.com/user-attachments/assets/8ca5208a-3e9c-4ecc-965c-97255bfe4d43" />
-<img width="810" height="823" alt="스크린샷 2025-07-18 오후 5 55 02" src="https://github.com/user-attachments/assets/3af24b9d-2742-4dfa-a539-602ffa83586a" />
+
+<img src="https://github.com/user-attachments/assets/8ca5208a-3e9c-4ecc-965c-97255bfe4d43" width="852" height="536">
+<img src="https://github.com/user-attachments/assets/3af24b9d-2742-4dfa-a539-602ffa83586a" width="810" height="823">
 
 ---
 
@@ -169,15 +171,16 @@ WandB, PyTorch Lightning, Hydra를 활용하여 재현 가능한 실험 파이�
 |---|---|---|
 | Soft Voting이 Hard Voting보다 우수할 것이다. | ✅ 대성공 | 확률 평균 방식이 단순 투표보다 효과적 |
 | TTA가 예측 안정성을 높일 것이다. | ✅ 성공 | 8-way TTA로 성능 및 안정성 향상 |
-| 모델은 많을수록 앙상블에 좋다. | 값진 실패 | 모델 수보다 다양성과 조합이 중요 |
+| 모델은 많을수록 앙상블에 좋다. | 🤔 값진 실패 | 모델 수보다 다양성과 조합이 중요 |
 
 ---
 
 ### 3️⃣ 마지막 한 수: 데이터 기반의 최종 결정  
 
 마지막 날 두 개의 앙상블 중 오답 노트를 기준으로 테스트하여 **1814 모델**을 최종 선택했습니다.  
-데이터 기반의 결정이 개인 최고 기록으로 이어졌습니다. (F1_score: 0.9462)
-<img width="648" height="567" alt="스크린샷 2025-07-11 오후 3 40 19" src="https://github.com/user-attachments/assets/f948cd1f-be7c-4265-a025-2436f9d12a0a" />
+데이터 기반의 결정이 개인 최고 기록으로 이어졌습니다.  
+
+<img src="https://github.com/user-attachments/assets/f948cd1f-be7c-4265-a025-2436f9d12a0a" width="648" height="567">
 
 ---
 
@@ -185,7 +188,8 @@ WandB, PyTorch Lightning, Hydra를 활용하여 재현 가능한 실험 파이�
 
 - **리더보드 점수:** **F1-Score 0.9462**  
 - **167회 이상의 실험 관리 및 분석**  
-<img width="957" height="820" alt="스크린샷 2025-07-18 오후 5 49 16" src="https://github.com/user-attachments/assets/c663adc0-facd-4f65-9b8d-177187accd12" />
+
+<img src="https://github.com/user-attachments/assets/c663adc0-facd-4f65-9b8d-177187accd12" width="757" height="820">
 
 ---
 
@@ -200,7 +204,5 @@ cd [Repo-Name]
 pip install -r requirements.txt
 
 # 3. 최종 추론 스크립트 실행
-python scripts/inference_two_ace_ensemble.py
+python scripts/inference/inference_two_ace_ensemble.py
 ```
-
----
