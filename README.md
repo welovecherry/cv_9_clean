@@ -48,7 +48,30 @@ I established a systematic workflow to ensure all experiments were logical and r
 
 <img src="https://github.com/user-attachments/assets/8ca5208a-3e9c-4ecc-965c-97255bfe4d43" width="852" height="536">
 <img src="https://github.com/user-attachments/assets/3af24b9d-2742-4dfa-a539-602ffa83586a" width="810" height="823">
+---
 
+## 🧩 Data Augmentation Strategies & Breakthrough
+Building Model Robustness with Multi-Stage Data Augmentation
+
+1️⃣ Initial Approach: Online Augmentation
+
+Action: Applied real-time augmentations (rotation, brightness) using Albumentations during training.
+
+Challenge: Effective for initial improvement but performance plateaued. Hard to control quality of on-the-fly augmentations.
+
+2️⃣ Advanced Strategy: Offline Augmentation
+
+Action: Created six distinct, high-quality augmented datasets offline using Augraphy (stains, shadows, etc.).
+
+Analysis: Performance varied across datasets. Visual inspection revealed 'Shadow Effect (v3)' and 'Stain Effect (v5)' resembled test data most closely.
+
+3️⃣ Breakthrough: Optimal Dataset Combination
+
+Hypothesis: Merging datasets with different strengths would enhance robustness against diverse noise.
+
+Action: Merged the two best-performing datasets (v3, v5) using pandas.concat to build a larger, more diverse training set.
+
+Result: The combined dataset broke through previous performance plateaus, boosting leaderboard scores significantly and became the baseline for all subsequent models.
 ---
 
 ## 🚀 Key Strategies and Achievements  
