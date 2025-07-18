@@ -12,7 +12,7 @@ It highlights my experience in building a reproducible experimentation pipeline 
 
 This project details my end-to-end process for a Document Image Classification Challenge with 17 classes.  
 The primary goal was to systematically improve model performance by moving beyond baseline models.  
-I designed and executed a highly organized experimentation workflow, conducting over **168 tracked experiments** to find the optimal data handling, modeling, and inference strategies.  
+I designed and executed a highly organized experimentation workflow, conducting over **167 tracked experiments** to find the optimal data handling, modeling, and inference strategies.  
 This rigorous, data-driven approach culminated in a sophisticated ensemble model that achieved my personal best score on the final leaderboard.  
  
 > Tracking over 167 experiments in W&B to find the winning strategy.  
@@ -26,7 +26,7 @@ This rigorous, data-driven approach culminated in a sophisticated ensemble model
 | Category | Technology | Purpose in Project |
 |---|---|---|
 | ML & Training | Python, PyTorch, PyTorch Lightning | Used PyTorch Lightning to structure training code cleanly and reduce boilerplate. All models were built on the PyTorch framework. |
-| Experiment Mgmt | Weights & Biases (W&B), Hydra | Tracked all 168+ experiments with W&B, visualizing metrics to compare models. Managed all complex configurations with Hydra, enabling rapid iteration. |
+| Experiment Mgmt | Weights & Biases (W&B), Hydra | Tracked all 167+ experiments with W&B, visualizing metrics to compare models. Managed all complex configurations with Hydra, enabling rapid iteration. |
 | Data & Analysis | pandas, OpenCV, Albumentations, Augraphy | Applied powerful augmentations with Albumentations. Simulated real-world document noise (stains, folds) with Augraphy to enhance model robustness. |
 | Tools & Etc. | Git, scikit-learn | Used Git for version control. Evaluated models using the F1-score metric from scikit-learn, which is crucial for imbalanced datasets. |
 
@@ -42,6 +42,8 @@ I established a systematic workflow to ensure all experiments were logical and r
 │ (Error Analysis) │   │ Preprocessing  │   │ (Hydra + W&B Sweep)│   │ (Ensemble/TTA)  │
 └──────────────────┘   └────────────────┘   └────────────────────┘   └─────────────────┘
 ```
+<img width="852" height="536" alt="스크린샷 2025-07-18 오후 5 54 12" src="https://github.com/user-attachments/assets/8ca5208a-3e9c-4ecc-965c-97255bfe4d43" />
+![Uploading 스크린샷 2025-07-18 오후 5.55.02.png…]()
 
 ---
 
@@ -80,7 +82,7 @@ This iterative process was the engine of my performance improvement.
 
 **The Result:** This approach gave me confidence to submit the 1814 model, achieving my personal best.  
 
-> ![IMAGE: Screenshot of the final comparison table used for model selection]  
+<img width="648" height="567" alt="스크린샷 2025-07-11 오후 3 40 19" src="https://github.com/user-attachments/assets/f948cd1f-be7c-4265-a025-2436f9d12a0a" />
 > Making the final decision by comparing top models against curated "hard cases".  
 
 ---
@@ -88,7 +90,7 @@ This iterative process was the engine of my performance improvement.
 ## 📊 Measurable Results  
   
 - **Final Leaderboard Score:** F1-score of **0.9462**  
-- **Systematic Experimentation:** Tracked **168+ experiments** in W&B  
+- **Systematic Experimentation:** Tracked **167+ experiments** in W&B  
 <img width="957" height="820" alt="스크린샷 2025-07-18 오후 5 49 16" src="https://github.com/user-attachments/assets/c663adc0-facd-4f65-9b8d-177187accd12" />
 
 ---
@@ -133,7 +135,7 @@ WandB, PyTorch Lightning, Hydra를 활용하여 재현 가능한 실험 파이�
 | 분야 | 기술 | 프로젝트 내 역할 |
 |---|---|---|
 | ML & 학습 | Python, PyTorch, PyTorch Lightning | PyTorch Lightning으로 코드를 구조화하고 PyTorch를 기반으로 모델을 구축 및 학습 |
-| 실험 관리 | Weights & Biases (W&B), Hydra | 168회 이상의 실험을 W&B로 추적하고, Hydra로 복잡한 설정을 관리 |
+| 실험 관리 | Weights & Biases (W&B), Hydra | 167회 이상의 실험을 W&B로 추적하고, Hydra로 복잡한 설정을 관리 |
 | 데이터 & 분석 | pandas, OpenCV, Albumentations, Augraphy | 데이터 증강 및 노이즈 시뮬레이션으로 모델 강건성 향상 |
 | 도구 & 기타 | Git, scikit-learn | Git으로 버전 관리, F1-Score로 성능 평가 |
 
@@ -147,6 +149,8 @@ WandB, PyTorch Lightning, Hydra를 활용하여 재현 가능한 실험 파이�
 │ (EDA, 오답노트)│   │ (Albumentations) │   │ (Hydra + W&B)    │   │ (앙상블, TTA)   │
 └──────────────┘   └────────────────┘   └───────────────────┘   └─────────────────┘
 ```
+<img width="852" height="536" alt="스크린샷 2025-07-18 오후 5 54 12" src="https://github.com/user-attachments/assets/8ca5208a-3e9c-4ecc-965c-97255bfe4d43" />
+<img width="810" height="823" alt="스크린샷 2025-07-18 오후 5 55 02" src="https://github.com/user-attachments/assets/3af24b9d-2742-4dfa-a539-602ffa83586a" />
 
 ---
 
@@ -173,6 +177,7 @@ WandB, PyTorch Lightning, Hydra를 활용하여 재현 가능한 실험 파이�
 
 마지막 날 두 개의 앙상블 중 오답 노트를 기준으로 테스트하여 **1814 모델**을 최종 선택했습니다.  
 데이터 기반의 결정이 개인 최고 기록으로 이어졌습니다. (F1_score: 0.9462)
+<img width="648" height="567" alt="스크린샷 2025-07-11 오후 3 40 19" src="https://github.com/user-attachments/assets/f948cd1f-be7c-4265-a025-2436f9d12a0a" />
 
 ---
 
