@@ -50,28 +50,48 @@ I established a systematic workflow to ensure all experiments were logical and r
 <img src="https://github.com/user-attachments/assets/3af24b9d-2742-4dfa-a539-602ffa83586a" width="810" height="823">
 ---
 
-## 🧩 Data Augmentation Strategies & Breakthrough
-Building Model Robustness with Multi-Stage Data Augmentation
+## 📝 Lessons Learned & Reflections (English Version)
 
-1️⃣ Initial Approach: Online Augmentation
+> *Key Takeaways from My Systematic ML Experimentation*
 
-Action: Applied real-time augmentations (rotation, brightness) using Albumentations during training.
+| No. | Topic                                                   | Key Takeaways                                                                                                           | Additional Insights                                                           |
+| --- | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| 1️⃣ | Error Analysis as the Starting Point                    | Manually reviewing model errors provided deep insights beyond metrics.                                                  | Creating an “Error Notebook” helped identify systematic model weaknesses.     |
+| 2️⃣ | The Power of Hypothesis-Driven Experimentation          | Each experiment was treated as a hypothesis test, leading to systematic improvements.                                   | Even failed experiments contributed valuable lessons for strategy refinement. |
+| 3️⃣ | The Importance of Experiment Tracking & Reproducibility | Rigorous experiment tracking with **Weights & Biases (W\&B)** and config management with **Hydra** prevented confusion. | Enabled easy reproduction of any result at any time.                          |
+| 4️⃣ | Quality Over Quantity in Ensembles                      | Adding more models did not automatically improve performance.                                                           | The diversity and complementarity of models mattered far more.                |
+| 5️⃣ | Confidence in Data-Driven Decision Making               | Trusted data over intuition, especially for final model selection.                                                      | This approach increased confidence in my final submission.                    |
 
-Challenge: Effective for initial improvement but performance plateaued. Hard to control quality of on-the-fly augmentations.
+> These insights will guide my future projects, ensuring every experiment is purposeful, reproducible, and hypothesis-driven.
 
-2️⃣ Advanced Strategy: Offline Augmentation
+---
 
-Action: Created six distinct, high-quality augmented datasets offline using Augraphy (stains, shadows, etc.).
+## 📝 핵심 교훈 및 회고 (한국어 버전)
 
-Analysis: Performance varied across datasets. Visual inspection revealed 'Shadow Effect (v3)' and 'Stain Effect (v5)' resembled test data most closely.
+> *체계적인 ML 실험을 통한 주요 배움과 성찰*
 
-3️⃣ Breakthrough: Optimal Dataset Combination
+| 번호  | 주제               | 핵심 내용                                                  | 추가 인사이트                               |
+| --- | ---------------- | ------------------------------------------------------ | ------------------------------------- |
+| 1️⃣ | 오답 노트 기반의 에러 분석  | 단순 성능 지표가 아닌 직접 오답을 분석하여 약점을 발견했습니다.                   | 오답 노트는 모델의 체계적인 약점 파악에 큰 도움이 되었습니다.   |
+| 2️⃣ | 가설 기반의 체계적인 실험   | 무작위 시도보다 가설을 세우고 검증하는 접근이 전략을 강화했습니다.                  | 실패한 실험에서도 중요한 교훈을 얻을 수 있었습니다.         |
+| 3️⃣ | 실험 추적과 재현성의 중요성  | **W\&B**로 실험을 기록하고, **Hydra**로 설정을 관리하여 실험 혼동을 방지했습니다. | 언제든지 결과를 재현할 수 있는 환경이 실험의 신뢰성을 높였습니다. |
+| 4️⃣ | 앙상블은 '수'보다 '다양성' | 모델 수를 늘린다고 항상 성능이 좋아지지 않았습니다.                          | 서로 다른 특성을 가진 모델의 조합이 훨씬 더 중요했습니다.     |
+| 5️⃣ | 데이터 기반 의사결정의 확신  | 직감이 아닌 데이터 분석을 바탕으로 최종 모델을 선택했습니다.                     | 데이터 중심의 결정은 최종 결과 제출에서 확신을 가져다주었습니다.  |
 
-Hypothesis: Merging datasets with different strengths would enhance robustness against diverse noise.
+> 이 교훈들은 앞으로의 프로젝트에서 목적과 데이터에 기반한 실험을 지속하는 기준이 될 것입니다.
 
-Action: Merged the two best-performing datasets (v3, v5) using pandas.concat to build a larger, more diverse training set.
+---
 
-Result: The combined dataset broke through previous performance plateaus, boosting leaderboard scores significantly and became the baseline for all subsequent models.
+## 🧩 Data Augmentation Strategies & Breakthrough (English Version)
+
+> *Building Model Robustness with Multi-Stage Data Augmentation*
+
+| No. | Strategy                                  | Actions                                                                                                                                                                                                                                         | Analysis & Results                                                                                                                                                         |
+| --- | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1️⃣ | Initial Approach: Online Augmentation     | **Action:** Applied real-time augmentations (rotation, brightness) using **Albumentations** during training.                                                                                                                                    | **Challenge:** Effective for initial improvement but performance plateaued. Hard to control quality of on-the-fly augmentations.                                           |
+| 2️⃣ | Advanced Strategy: Offline Augmentation   | **Action:** Created six distinct, high-quality augmented datasets offline using **Augraphy** (stains, shadows, etc.).                                                                                                                           | **Analysis:** Performance varied across datasets. Visual inspection revealed **'Shadow Effect (v3)'** and **'Stain Effect (v5)'** resembled test data most closely.        |
+| 3️⃣ | Breakthrough: Optimal Dataset Combination | **Hypothesis:** Merging datasets with different strengths would enhance robustness against diverse noise.<br>**Action:** Merged the two best-performing datasets (v3, v5) using **pandas.concat** to build a larger, more diverse training set. | **Result:** The combined dataset broke through previous performance plateaus, boosting leaderboard scores significantly and became the baseline for all subsequent models. |
+
 ---
 
 ## 🚀 Key Strategies and Achievements  
@@ -217,30 +237,16 @@ WandB, PyTorch Lightning, Hydra를 활용하여 재현 가능한 실험 파이�
 <img src="https://github.com/user-attachments/assets/3af24b9d-2742-4dfa-a539-602ffa83586a" width="810" height="823">
 
 ---
-## 🧩 데이터 증강 전략 및 성과 
 
-모델의 강건성과 일반화 성능을 위한 다단계 데이터 증강 전략
+## 🧩 데이터 증강 전략 및 성과 (한국어 버전)
 
-1️⃣ 초기 접근: 온라인 증강 (Online Augmentation)
+> *모델의 강건성과 일반화 성능을 위한 다단계 데이터 증강 전략*
 
-실행: Albumentations를 사용하여 학습 중 회전, 밝기 조절 등의 증강을 실시간으로 적용했습니다.
-
-한계점: 초기 성능 향상에는 효과적이었으나 일정 점수대에서 성능이 정체되었습니다. 실시간 증강의 품질을 통제하기 어려워 한계를 느꼈습니다.
-
-2️⃣ 심화 전략: 오프라인 증강 (Offline Augmentation)
-
-실행: Augraphy를 활용해 얼룩, 그림자 등 6가지 테마의 고품질 증강 데이터를 사전에 생성했습니다.
-
-분석: 데이터셋 별 성능 편차가 확인되었고, 그 중 **'그림자 효과 (v3)'**와 **'얼룩 효과 (v5)'**가 테스트 데이터와 가장 유사하다는 시각적 분석 결과를 얻었습니다.
-
-3️⃣ 돌파구: 최적 데이터셋 조합
-
-가설: 서로 다른 강점을 가진 데이터셋을 통합하면 다양한 노이즈에 더 강인한 모델이 될 것이다.
-
-실행: 성능이 우수했던 v3와 v5 데이터를 pandas.concat으로 통합하여, 더 크고 다양한 학습 데이터셋을 구축했습니다.
-
-성과: 통합 데이터셋으로 재학습한 결과, 기존 성능 정체를 돌파하며 리더보드 점수가 크게 향상되었습니다. 이후 모든 모델 학습의 핵심 베이스라인으로 사용되었습니다.
-
+| 번호  | 전략                                    | 실행                                                                                                                                                    | 분석 및 결과                                                                                                           |
+| --- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| 1️⃣ | 초기 접근: 온라인 증강 (Online Augmentation)   | **실행:** **Albumentations**를 사용하여 학습 중 회전, 밝기 조절 등의 증강을 실시간으로 적용했습니다.                                                                                  | **한계점:** 초기 성능 향상에는 효과적이었으나 일정 점수대에서 성능이 정체되었습니다. 실시간 증강의 품질을 통제하기 어려워 한계를 느꼈습니다.                                 |
+| 2️⃣ | 심화 전략: 오프라인 증강 (Offline Augmentation) | **실행:** **Augraphy**를 활용해 얼룩, 그림자 등 6가지 테마의 고품질 증강 데이터를 사전에 생성했습니다.                                                                                   | **분석:** 데이터셋 별 성능 편차가 확인되었고, 그 중 \*\*'그림자 효과 (v3)'\*\*와 \*\*'얼룩 효과 (v5)'\*\*가 테스트 데이터와 가장 유사하다는 시각적 분석 결과를 얻었습니다. |
+| 3️⃣ | 돌파구: 최적 데이터셋 조합                       | **가설:** 서로 다른 강점을 가진 데이터셋을 통합하면 다양한 노이즈에 더 강인한 모델이 될 것이다.<br>**실행:** 성능이 우수했던 **v3**와 **v5** 데이터를 **pandas.concat**으로 통합하여, 더 크고 다양한 학습 데이터셋을 구축했습니다. | **성과:** 통합 데이터셋으로 재학습한 결과, 기존 성능 정체를 돌파하며 리더보드 점수가 크게 향상되었습니다. 이후 모든 모델 학습의 핵심 베이스라인으로 사용되었습니다.                   |
 
 
 ---
