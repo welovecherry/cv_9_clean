@@ -48,9 +48,10 @@ I established a systematic workflow to ensure all experiments were logical and r
 
 <img src="https://github.com/user-attachments/assets/8ca5208a-3e9c-4ecc-965c-97255bfe4d43" width="852" height="536">
 <img src="https://github.com/user-attachments/assets/3af24b9d-2742-4dfa-a539-602ffa83586a" width="810" height="823">
+
 ---
 
-## 📝 Lessons Learned & Reflections (English Version)
+## 📝 Lessons Learned & Reflections
 
 > *Key Takeaways from My Systematic ML Experimentation*
 
@@ -63,22 +64,6 @@ I established a systematic workflow to ensure all experiments were logical and r
 | 5️⃣ | Confidence in Data-Driven Decision Making               | Trusted data over intuition, especially for final model selection.                                                      | This approach increased confidence in my final submission.                    |
 
 > These insights will guide my future projects, ensuring every experiment is purposeful, reproducible, and hypothesis-driven.
-
----
-
-## 📝 핵심 교훈 및 회고 (한국어 버전)
-
-> *체계적인 ML 실험을 통한 주요 배움과 성찰*
-
-| 번호  | 주제               | 핵심 내용                                                  | 추가 인사이트                               |
-| --- | ---------------- | ------------------------------------------------------ | ------------------------------------- |
-| 1️⃣ | 오답 노트 기반의 에러 분석  | 단순 성능 지표가 아닌 직접 오답을 분석하여 약점을 발견했습니다.                   | 오답 노트는 모델의 체계적인 약점 파악에 큰 도움이 되었습니다.   |
-| 2️⃣ | 가설 기반의 체계적인 실험   | 무작위 시도보다 가설을 세우고 검증하는 접근이 전략을 강화했습니다.                  | 실패한 실험에서도 중요한 교훈을 얻을 수 있었습니다.         |
-| 3️⃣ | 실험 추적과 재현성의 중요성  | **W\&B**로 실험을 기록하고, **Hydra**로 설정을 관리하여 실험 혼동을 방지했습니다. | 언제든지 결과를 재현할 수 있는 환경이 실험의 신뢰성을 높였습니다. |
-| 4️⃣ | 앙상블은 '수'보다 '다양성' | 모델 수를 늘린다고 항상 성능이 좋아지지 않았습니다.                          | 서로 다른 특성을 가진 모델의 조합이 훨씬 더 중요했습니다.     |
-| 5️⃣ | 데이터 기반 의사결정의 확신  | 직감이 아닌 데이터 분석을 바탕으로 최종 모델을 선택했습니다.                     | 데이터 중심의 결정은 최종 결과 제출에서 확신을 가져다주었습니다.  |
-
-> 이 교훈들은 앞으로의 프로젝트에서 목적과 데이터에 기반한 실험을 지속하는 기준이 될 것입니다.
 
 ---
 
